@@ -1,4 +1,4 @@
-name: Deploy to Server
+name: Deploy to VPS
 
 on:
   push:
@@ -10,19 +10,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
+    - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Add SSH Key and Update Known Hosts
-      run: |
-        mkdir -p ~/.ssh
-        ssh-keyscan -t rsa 34.16.132.251 >> ~/.ssh/known_hosts
-        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
+    - name: Set up SSH
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-    - name: Deploy to Server
+    - name: Deploy to VPS
       run: |
-        ssh www_youssoufateoi@34.16.132.251 "cd /path/to/your/website && git pull origin master"
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-
+        ssh www_youssoufateoi@34.16.132.251 "cd /home/youssoufa/web/bsaffe.com/public_html && git pull origin master"
