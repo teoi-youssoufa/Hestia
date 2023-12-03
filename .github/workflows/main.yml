@@ -13,11 +13,15 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v2
 
+    - name: Add SSH Key and Update Known Hosts
+      run: |
+        mkdir -p ~/.ssh
+        ssh-keyscan -t rsa instance-1 >> ~/.ssh/known_hosts
+        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+
     - name: Deploy to Server
       run: |
-        # Add any deployment commands here
-        # For example, you might use SCP, SFTP, or another method to copy files to your server
-        # You can also run scripts or commands specific to your deployment process
-        ssh user@your_server_ip "cd /path/to/your/website && git pull origin master"
+        ssh www_youssoufateoi@instance-1 "cd /path/to/your/website && git pull origin master"
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
