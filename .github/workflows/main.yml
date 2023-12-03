@@ -1,0 +1,23 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Deploy to Server
+      run: |
+        # Add any deployment commands here
+        # For example, you might use SCP, SFTP, or another method to copy files to your server
+        # You can also run scripts or commands specific to your deployment process
+        ssh user@your_server_ip "cd /path/to/your/website && git pull origin master"
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
