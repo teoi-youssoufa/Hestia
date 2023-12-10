@@ -1,4 +1,4 @@
-name: Deploy to VPS
+name: Deploy to Google Cloud Instance
 
 on:
   push:
@@ -16,7 +16,7 @@ jobs:
     - name: Set up SSH
       uses: webfactory/ssh-agent@v0.5.3
       with:
-        ssh-private-key: ${{ secrets.gcloud}}
+        ssh-private-key: ${{ secrets.gcloud }}
 
     - name: Install dependencies
       run: |
@@ -26,8 +26,9 @@ jobs:
       run: |
         # Add commands to build your website if needed
 
-    - name: Deploy to VPS
+    - name: Deploy to Google Cloud Instance
       run: |
         # Add any additional deployment steps, e.g., restarting web server processes
         ssh www_youssoufateoi@34.16.132.251 "cd /home/youssoufa/web/bsaffe.com/public_html && git pull origin master"
+
 
