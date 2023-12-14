@@ -1,10 +1,10 @@
-name: Deploy
+name: Deployer
 
 # Controls when the action will run. 
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ main ]
+    branches: [ master ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -16,7 +16,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:       
     - name: Deploy using ssh
-      uses: appleboy/ssh-action@master
+      uses: appleboy/ssh-action@2
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
@@ -24,6 +24,6 @@ jobs:
         port: 22
         script: |
           cd /var/www/youtube.com/
-          git pull origin main
+          git pull origin master
           git status
           npm install --only=prod
